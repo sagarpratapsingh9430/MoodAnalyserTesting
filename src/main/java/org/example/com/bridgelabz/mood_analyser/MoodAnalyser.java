@@ -1,23 +1,30 @@
 package org.example.com.bridgelabz.mood_analyser;
 
+import org.example.com.bridgelabz.exceptions.MoodAnalysisException;
+
+import java.util.EmptyStackException;
+
 public class MoodAnalyser {
     String message;
     public MoodAnalyser(String message){
         this.message = message;
     }
-    public String analyseMood(String message){
+    public String analyseMood(String message) throws MoodAnalysisException {
         this.message = message;
         return analyseMood();
     }
-    public String analyseMood() {
+    public String analyseMood() throws MoodAnalysisException {
         try {
-            if (message.contains("I am in Happy Mood")) {
-                return "HAPPY";
-            } else {
+            if (message.length() == 0){
+                throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_EMPTY,"Please enter proper message");
+            }
+            if (message.contains(null)) {
                 return "SAD";
+            } else {
+                return "HAPPY";
             }
         }catch (NullPointerException e){
-            return "HAPPY";
+           throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.ENTERED_NULL,"Please enter proper message");
         }
     }
 }
